@@ -1,1 +1,1 @@
-# Test_Python_Training
+#Python Training для тестировщиков
