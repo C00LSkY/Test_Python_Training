@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+__author__ = "C00LSkY"
+
 from selenium.webdriver.firefox.webdriver import WebDriver
 import unittest
 from group import Group
