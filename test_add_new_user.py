@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from selenium.webdriver.firefox.webdriver import WebDriver
 import unittest
+from group import Anketa
+
 
 def is_alert_present(wd):
     try:
@@ -22,6 +24,7 @@ class test_add_new_user(unittest.TestCase):
         wd.get("http://localhost/addressbook/")
 
     def login(self, wd, username, password):
+        # input login and password
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("%s" % username)
@@ -33,38 +36,39 @@ class test_add_new_user(unittest.TestCase):
     def open_new_user_page(self, wd):
         wd.find_element_by_link_text("add new").click()
 
-    def add_new_user(self, wd):
+    def add_new_user(self, wd, group):
+        # input user parametrs
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("Вася")
+        wd.find_element_by_name("firstname").send_keys(group.firstname)
         wd.find_element_by_name("middlename").click()
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys("Петрович")
+        wd.find_element_by_name("middlename").send_keys(group.midlename)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys("Пупкин")
+        wd.find_element_by_name("lastname").send_keys(group.lastname)
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys("Pypka")
+        wd.find_element_by_name("nickname").send_keys(group.nickname)
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys("ООО\"Ромашка\"")
+        wd.find_element_by_name("company").send_keys(group.company)
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys("Москва Ромашкино стрит 5")
+        wd.find_element_by_name("address").send_keys(group.address)
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("79055555555")
+        wd.find_element_by_name("home").send_keys(group.home_tel)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("79066666666")
+        wd.find_element_by_name("mobile").send_keys(group.mobile_tel)
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys("79077777777")
+        wd.find_element_by_name("work").send_keys(group.work_tel)
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("pypka1@mail.ru")
+        wd.find_element_by_name("email").send_keys(group.email)
         wd.find_element_by_name("email2").click()
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").click()
@@ -72,10 +76,10 @@ class test_add_new_user(unittest.TestCase):
             wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[2]").click()
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys("1990")
+        wd.find_element_by_name("byear").send_keys(group.byear)
         wd.find_element_by_name("address2").click()
         wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys("Москва Дом")
+        wd.find_element_by_name("address2").send_keys(group.address2)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def logout(self, wd):
@@ -88,7 +92,10 @@ class test_add_new_user(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_new_user_page(wd)
-        self.add_new_user(wd, Group(name="test_group", header="тестовая группа", footer="группа 2018"))
+        self.add_new_user(wd, Anketa(firstname="Вася", midlename="Петрович", lastname='Пупкин', nickname='Пупка',
+                                     company='Ромашка', address='Москва', home_tel='79999999999',
+                                     mobile_tel='78888888888', work_tel='77777777777', email='pypka@mail.ru',
+                                     byear='1990', address2='Москва 2'))
         self.wd.implicitly_wait(60)
         self.logout(wd)
 
