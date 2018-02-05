@@ -16,15 +16,10 @@ class test_add_new_user(unittest.TestCase):
         self.wd = WebDriver(capabilities={"marionette": False}, firefox_binary="C:/Program Files/Mozilla Firefox/firefox.exe")
         self.wd.implicitly_wait(60)
     
-    def test_add_new_user(self):
-        success = True
-        wd = self.wd
-
-    def open_home_page(self, wd):
-        wd.get("http://localhost/addressbook/")
-
+    
     def login(self, wd, username, password):
         # input login and password
+        wd.get("http://localhost/addressbook/")
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("%s" % username)
@@ -33,11 +28,10 @@ class test_add_new_user(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys("%s" % password)
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
 
-    def open_new_user_page(self, wd):
-        wd.find_element_by_link_text("add new").click()
 
     def add_new_user(self, wd, group):
         # input user parametrs
+        wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(group.firstname)
@@ -89,14 +83,11 @@ class test_add_new_user(unittest.TestCase):
     def test_add_new_user(self):
         success = True
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_new_user_page(wd)
         self.add_new_user(wd, Anketa(firstname="Вася", midlename="Петрович", lastname='Пупкин', nickname='Пупка',
                                      company='Ромашка', address='Москва', home_tel='79999999999',
                                      mobile_tel='78888888888', work_tel='77777777777', email='pypka@mail.ru',
                                      byear='1990', address2='Москва 2'))
-        self.wd.implicitly_wait(60)
         self.logout(wd)
 
 
