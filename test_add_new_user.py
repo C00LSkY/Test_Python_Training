@@ -17,7 +17,8 @@ class test_add_new_user(unittest.TestCase):
         self.wd.implicitly_wait(60)
     
     
-    def login(self, wd, username, password):
+    def login(self, username, password):
+        wd = self.wd
         # input login and password
         wd.get("http://localhost/addressbook/")
         wd.find_element_by_name("user").click()
@@ -29,7 +30,8 @@ class test_add_new_user(unittest.TestCase):
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
 
 
-    def add_new_user(self, wd, group):
+    def add_new_user(self, group):
+        wd = self.wd
         # input user parametrs
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
@@ -76,19 +78,18 @@ class test_add_new_user(unittest.TestCase):
         wd.find_element_by_name("address2").send_keys(group.address2)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
 
     def test_add_new_user(self):
-        success = True
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.add_new_user(wd, Anketa(firstname="Вася", midlename="Петрович", lastname='Пупкин', nickname='Пупка',
+        self.login(username="admin", password="secret")
+        self.add_new_user(Anketa(firstname="Вася", midlename="Петрович", lastname='Пупкин', nickname='Пупка',
                                      company='Ромашка', address='Москва', home_tel='79999999999',
                                      mobile_tel='78888888888', work_tel='77777777777', email='pypka@mail.ru',
                                      byear='1990', address2='Москва 2'))
-        self.logout(wd)
+        self.logout()
 
 
     def tearDown(self):

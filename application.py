@@ -1,28 +1,16 @@
-# -*- coding: utf-8 -*-
-__author__ = "C00LSkY"
-
-import unittest
+__author__= "C00LSkY"
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-from group import Group
 
-from application import Application
+class Application:
 
-
-def is_alert_present(wd):
-    try:
-        wd.switch_to_alert().text
-        return True
-    except:
-        return False
-
-class test_add_group(unittest.TestCase):
-    def setUp(self):
-        self.wd = WebDriver(capabilities={"marionette": False}, firefox_binary="C:/Program Files/Mozilla Firefox/firefox.exe")
+    def __init__(self):
+        self.wd = WebDriver(capabilities={"marionette": False},
+                            firefox_binary="C:/Program Files/Mozilla Firefox/firefox.exe")
         self.wd.implicitly_wait(60)
 
-    def logout(self):
+   def logout(self):
         wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
@@ -44,7 +32,6 @@ class test_add_group(unittest.TestCase):
         wd.find_element_by_link_text("groups").click()
 
 
-
     def login(self, username, password):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
@@ -56,21 +43,5 @@ class test_add_group(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys("%s" % password)
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
 
-
-
-    def test_add_group(self):
-        self.login( username="admin", password="secret"))
-        self.create_group( Group(name="test_group", header="тестовая группа", footer="группа 2018"))
-        self.logout()
-
-    def test_empty_group(self):
-        self.login(username="admin", password="secret")
-        self.create_group(Group(name="", header="", footer=""))
-        self.logout()
-
-
-    def tearDown(self):
+    def destroy(self):
         self.wd.quit()
-
-if __name__ == '__main__':
-    unittest.main()
