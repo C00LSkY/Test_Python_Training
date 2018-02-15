@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from contacts import Anketa
-from application_user import Application_user
+from model.contacts import Anketa
+from fixture.application_user import Application_user
 
 
 
