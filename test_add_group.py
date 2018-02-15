@@ -8,10 +8,10 @@ from group import Group
 from application import Application
 
 
-@pytest.fixture
+@pytest.fixture()
 def app(request):
     fixture = Application()
-    request.addfinalaizer(fixture.destroy)
+    request.addfinalizer(fixture.destroy)
     return fixture
 
 
