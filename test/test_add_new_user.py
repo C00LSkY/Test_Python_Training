@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+__author__ = "C00LSkY"
 import pytest
 from model.contacts import Anketa
 from fixture.application import Application

@@ -1,4 +1,4 @@
-
+__author__ = "C00LSkY"
 
 class UserHelper:
 
