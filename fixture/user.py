@@ -1,30 +1,12 @@
-_author__= "C00LSkY"
-
-from selenium.webdriver.firefox.webdriver import WebDriver
 
 
-class Application_user:
+class UserHelper:
 
-    def __init__(self):
-        self.wd = WebDriver(capabilities={"marionette": False},
-                            firefox_binary="C:/Program Files/Mozilla Firefox/firefox.exe")
-        self.wd.implicitly_wait(60)
-
-    def login(self, username, password):
-        wd = self.wd
-        # input login and password
-        wd.get("http://localhost/addressbook/")
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("%s" % username)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("%s" % password)
-        wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
-
+    def __init__(self, app):
+        self.app = app
 
     def add_new_user(self, contacts):
-        wd = self.wd
+        wd = self.app.wd
         # input user parametrs
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
@@ -70,10 +52,3 @@ class Application_user:
         wd.find_element_by_name("address2").clear()
         wd.find_element_by_name("address2").send_keys(contacts.address2)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-
-    def logout(self):
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
-
-    def destroy(self):
-        self.wd.quit()
