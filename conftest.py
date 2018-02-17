@@ -1,4 +1,4 @@
-
+__author__ = "C00LSkY"
 
 import pytest
 from fixture.application import Application
