@@ -1,19 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = "C00LSkY"
-import pytest
+
+
 from model.contacts import Anketa
-from fixture.application import Application
-from fixture.user import UserHelper
-from fixture.session import SessionHelper
-
-
-
-
-@pytest.fixture()
-def app(request):
-    fixture = Application()
-    request.addfinalizer(fixture.destroy)
-    return fixture
 
 
 
