@@ -5,8 +5,13 @@ class UserHelper:
     def __init__(self, app):
         self.app = app
 
+    def open_home(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
+
     def add_new_user(self, contacts):
         wd = self.app.wd
+        self.open_home()
         # input user parametrs
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
@@ -56,6 +61,7 @@ class UserHelper:
 
     def delete_first_user(self):
         wd = self.app.wd
+        self.open_home()
         #select first user
         wd.find_element_by_name("selected[]").click()
         #submit deletion
@@ -64,6 +70,7 @@ class UserHelper:
 
     def edit_first_user(self, contacts):
         wd = self.app.wd
+        self.open_home()
         # select first user
         wd.find_element_by_name("selected[]").click()
         # input user parametrs
