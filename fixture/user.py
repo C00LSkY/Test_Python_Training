@@ -118,3 +118,9 @@ class UserHelper:
         wd.find_element_by_name("address2").clear()
         wd.find_element_by_name("address2").send_keys(contacts.address2)
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+
+    def count_user(self):
+        wd = self.app.wd
+        self.open_home()
+        # select first user
+        return len(wd.find_elements_by_name("selected[]"))
