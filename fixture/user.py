@@ -7,7 +7,8 @@ class UserHelper:
 
     def open_home(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        if not ((wd.current_url.endswith("/addressbook/")) and (wd.find_element_by_link_text("Logout"))):
+            wd.find_element_by_link_text("home").click()
 
     def add_new_user(self, contacts):
         wd = self.app.wd
