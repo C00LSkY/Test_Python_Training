@@ -132,9 +132,10 @@ class UserHelper:
     def get_user_list(self):
         wd = self.app.wd
         self.open_home()
-        users = []
-       for element in wd.find_elements_by_name("entry"):
-           text = element.text
+        userlist = []
+        for element in wd.find_elements_by_name("entry"):
+           cell = element.find_elements_by_tag_name("td")
+           text = cell[1].text
            id = element.find_element_by_name("selected[]").get_attribute("value")
-           users.append(Anketa(name=text, id=id))
-        return users
+           userlist.append(Anketa(lastname=text, id=id))
+        return userlist

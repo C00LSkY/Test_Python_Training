@@ -9,4 +9,7 @@ def test_delete_first_user(app):
                                      company='Ромашка+Олень', address='Москва', home_tel='79999999990',
                                      mobile_tel='78888888880', work_tel='', email='pypka@mail.ru',
                                      byear='', address2=''))
+    old_users = app.user.get_user_list()
     app.user.delete_first_user()
+    new_users = app.user.get_user_list()
+    assert len(old_users) - 1 == len(new_users)
