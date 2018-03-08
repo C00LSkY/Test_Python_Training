@@ -1,5 +1,7 @@
 __author__ = "C00LSkY"
 
+from model.contacts import Anketa
+
 class UserHelper:
 
     def __init__(self, app):
@@ -125,3 +127,14 @@ class UserHelper:
         self.open_home()
         # select first user
         return len(wd.find_elements_by_name("selected[]"))
+
+
+    def get_user_list(self):
+        wd = self.app.wd
+        self.open_home()
+        users = []
+       for element in wd.find_elements_by_name("entry"):
+           text = element.text
+           id = element.find_element_by_name("selected[]").get_attribute("value")
+           users.append(Anketa(name=text, id=id))
+        return users
