@@ -9,12 +9,16 @@ def test_edit_user(app):
                                      mobile_tel='78888888880', work_tel='', email='pypka@mail.ru',
                                      byear='', address2=''))
     old_users = app.user.get_user_list()
-    app.user.edit_first_user(Anketa(firstname="Николай", midlename="Петрович", lastname='Пупкин', nickname='Pypka',
+    user = Anketa(firstname="Николай", midlename="Петрович", lastname='Пупкин', nickname='Pypka',
                                      company='Ромашка+Олень', address='Москва', home_tel='79999999990',
                                      mobile_tel='78888888880', work_tel='', email='pypka@mail.ru',
-                                     byear='1990', address2='Москва 2'))
+                                     byear='1990', address2='Москва 2')
+    user.id = old_users[0].id
+    app.user.edit_first_user(user)
     new_users = app.user.get_user_list()
     assert len(old_users) == len(new_users)
+    old_users[0] = user
+    assert sorted(old_users, key=Anketa.id_or_max) == sorted(new_users, key=Anketa.id_or_max)
 
 
 

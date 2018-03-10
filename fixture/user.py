@@ -136,6 +136,7 @@ class UserHelper:
         for element in wd.find_elements_by_name("entry"):
            cell = element.find_elements_by_tag_name("td")
            text = cell[1].text
+           text2 = cell[2].text
            id = element.find_element_by_name("selected[]").get_attribute("value")
-           userlist.append(Anketa(lastname=text, id=id))
+           userlist.append(Anketa(lastname=text, id=id, firstname=text2))
         return userlist
