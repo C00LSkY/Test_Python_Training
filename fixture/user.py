@@ -60,6 +60,7 @@ class UserHelper:
         wd.find_element_by_name("address2").clear()
         wd.find_element_by_name("address2").send_keys(contacts.address2)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.user_list_cashe = None
 
 
     def delete_first_user(self):
@@ -70,6 +71,7 @@ class UserHelper:
         #submit deletion
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
+        self.user_list_cashe = None
 
     def edit_first_user(self, contacts):
         wd = self.app.wd
@@ -121,6 +123,7 @@ class UserHelper:
         wd.find_element_by_name("address2").clear()
         wd.find_element_by_name("address2").send_keys(contacts.address2)
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        self.user_list_cashe = None
 
     def count_user(self):
         wd = self.app.wd
@@ -128,15 +131,17 @@ class UserHelper:
         # select first user
         return len(wd.find_elements_by_name("selected[]"))
 
+    user_list_cashe = None
 
     def get_user_list(self):
-        wd = self.app.wd
-        self.open_home()
-        userlist = []
-        for element in wd.find_elements_by_name("entry"):
-           cell = element.find_elements_by_tag_name("td")
-           text = cell[1].text
-           text2 = cell[2].text
-           id = element.find_element_by_name("selected[]").get_attribute("value")
-           userlist.append(Anketa(lastname=text, id=id, firstname=text2))
-        return userlist
+        if self.user_list_cashe is None:
+            wd = self.app.wd
+            self.open_home()
+            self.user_list_cashe = []
+            for element in wd.find_elements_by_name("entry"):
+               cell = element.find_elements_by_tag_name("td")
+               text = cell[1].text
+               text2 = cell[2].text
+               id = element.find_element_by_name("selected[]").get_attribute("value")
+               self.user_list_cashe.append(Anketa(lastname=text, id=id, firstname=text2))
+        return list(self.user_list_cashe)

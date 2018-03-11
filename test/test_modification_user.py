@@ -15,8 +15,8 @@ def test_edit_user(app):
                                      byear='1990', address2='Москва 2')
     user.id = old_users[0].id
     app.user.edit_first_user(user)
+    assert len(old_users) == app.user.count_user()
     new_users = app.user.get_user_list()
-    assert len(old_users) == len(new_users)
     old_users[0] = user
     assert sorted(old_users, key=Anketa.id_or_max) == sorted(new_users, key=Anketa.id_or_max)
 

@@ -11,5 +11,4 @@ def test_delete_first_user(app):
                                      byear='', address2=''))
     old_users = app.user.get_user_list()
     app.user.delete_first_user()
-    new_users = app.user.get_user_list()
-    assert len(old_users) - 1 == len(new_users)
+    assert len(old_users) - 1 == app.user.count_user()
