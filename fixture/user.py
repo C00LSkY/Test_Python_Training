@@ -62,22 +62,37 @@ class UserHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.user_list_cashe = None
 
+    def select_first_user(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+    def select_user_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def delete_first_user(self):
+        self.delete_user_by_index(0)
+
+
+    def delete_user_by_index(self, index):
         wd = self.app.wd
         self.open_home()
         #select first user
-        wd.find_element_by_name("selected[]").click()
+        self.select_user_by_index(index)
         #submit deletion
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.user_list_cashe = None
 
-    def edit_first_user(self, contacts):
+    def edit_first_user(self):
+        self.edit_user_by_index(0)
+
+
+    def edit_user_by_index(self, index, contacts):
         wd = self.app.wd
         self.open_home()
         # select first user
-        wd.find_element_by_name("selected[]").click()
+        self.select_user_by_index(index)
         # input user parametrs
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         wd.find_element_by_name("firstname").click()
@@ -130,6 +145,7 @@ class UserHelper:
         self.open_home()
         # select first user
         return len(wd.find_elements_by_name("selected[]"))
+
 
     user_list_cashe = None
 
