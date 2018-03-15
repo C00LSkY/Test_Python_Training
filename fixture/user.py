@@ -84,17 +84,15 @@ class UserHelper:
         wd.switch_to_alert().accept()
         self.user_list_cashe = None
 
-    def edit_first_user(self):
-        self.edit_user_by_index(0)
+    def edit_first_user(self, contacts):
+        self.edit_user_by_index(0, contacts)
 
 
     def edit_user_by_index(self, index, contacts):
         wd = self.app.wd
         self.open_home()
-        # select first user
-        self.select_user_by_index(index)
         # input user parametrs
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        self.select_user_edit_by_index(index)
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contacts.firstname)
@@ -139,6 +137,11 @@ class UserHelper:
         wd.find_element_by_name("address2").send_keys(contacts.address2)
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
         self.user_list_cashe = None
+
+
+    def select_user_edit_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_xpath(".//img[@title='Edit']")[index].click()
 
     def count_user(self):
         wd = self.app.wd

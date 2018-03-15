@@ -52,8 +52,8 @@ class GroupHelper:
         self.group_cashe = None
 
 
-    def edit_group(self):
-        self.edit_group_by_index(0)
+    def edit_group(self, group):
+        self.edit_group_by_index(0, group)
 
     def edit_group_by_index(self, index, group):
         wd = self.app.wd
