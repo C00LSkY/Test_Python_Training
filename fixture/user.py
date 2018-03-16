@@ -143,6 +143,10 @@ class UserHelper:
         wd = self.app.wd
         wd.find_elements_by_xpath(".//img[@title='Edit']")[index].click()
 
+    def select_user_view_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_xpath(".//img[@title='Details']")[index].click()
+
     def count_user(self):
         wd = self.app.wd
         self.open_home()
@@ -162,5 +166,22 @@ class UserHelper:
                text = cell[1].text
                text2 = cell[2].text
                id = element.find_element_by_name("selected[]").get_attribute("value")
-               self.user_list_cashe.append(Anketa(lastname=text, id=id, firstname=text2))
+               all_phones = cell[5].text.splitlines()
+               self.user_list_cashe.append(Anketa(lastname=text, id=id, firstname=text2, home_tel=all_phones[0],
+                                                  mobile_tel=all_phones[1], work_tel=all_phones[2] ))
         return list(self.user_list_cashe)
+
+    def get_user_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.select_user_edit_by_index(index)
+        firstname = wd.find_element_by_name('firstname').get_attribute('value')
+        lastname = wd.find_element_by_name('lastname').get_attribute('value')
+        id = wd.find_element_by_name('id').get_attribute('value')
+        home_tel = wd.find_element_by_name('home').get_attribute('value')
+        mobile_tel = wd.find_element_by_name('mobile').get_attribute('value')
+        work_tel = wd.find_element_by_name('work').get_attribute('value')
+        return Anketa(firstname=firstname, lastname=lastname, id=id, home_tel=home_tel, mobile_tel=mobile_tel,
+                      work_tel=work_tel)
+
+
+
