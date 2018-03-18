@@ -1,6 +1,7 @@
 __author__ = "C00LSkY"
 
 from model.contacts import Anketa
+import re
 
 class UserHelper:
 
@@ -141,10 +142,12 @@ class UserHelper:
 
     def select_user_edit_by_index(self, index):
         wd = self.app.wd
+        self.open_home()
         wd.find_elements_by_xpath(".//img[@title='Edit']")[index].click()
 
     def select_user_view_by_index(self, index):
         wd = self.app.wd
+        self.open_home()
         wd.find_elements_by_xpath(".//img[@title='Details']")[index].click()
 
     def count_user(self):
@@ -166,9 +169,9 @@ class UserHelper:
                text = cell[1].text
                text2 = cell[2].text
                id = element.find_element_by_name("selected[]").get_attribute("value")
-               all_phones = cell[5].text.splitlines()
-               self.user_list_cashe.append(Anketa(lastname=text, id=id, firstname=text2, home_tel=all_phones[0],
-                                                  mobile_tel=all_phones[1], work_tel=all_phones[2] ))
+               all_phones = cell[5].text
+               self.user_list_cashe.append(Anketa(lastname=text, id=id, firstname=text2,
+                                                  all_phones_from_home_page=all_phones))
         return list(self.user_list_cashe)
 
     def get_user_info_from_edit_page(self, index):
@@ -182,6 +185,15 @@ class UserHelper:
         work_tel = wd.find_element_by_name('work').get_attribute('value')
         return Anketa(firstname=firstname, lastname=lastname, id=id, home_tel=home_tel, mobile_tel=mobile_tel,
                       work_tel=work_tel)
+
+    def get_user_list_on_view_page(self, index):
+        wd = self.app.wd
+        self.select_user_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        home_tel = re.search("H: (.*)", text).group(1)
+        mobile_tel = re.search("M: (.*)", text).group(1)
+        work_tel = re.search("W: (.*)", text).group(1)
+        return Anketa(home_tel=home_tel, mobile_tel=mobile_tel, work_tel=work_tel)
 
 
 
