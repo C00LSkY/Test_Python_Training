@@ -5,8 +5,9 @@ from sys import maxsize
 class Anketa:
 
     def __init__(self, firstname = None, midlename = None, lastname = None, nickname = None, company = None,
-                 address = None, home_tel = None, mobile_tel = None, work_tel = None, email = None,byear = None,
-                 address2 = None, id=None, all_phones_from_home_page=None):
+                 address = None, home_tel = None, mobile_tel = None, work_tel = None, email = None, email2=None,
+                 email3=None, byear = None, address2 = None, id=None, all_phones_from_home_page=None,
+                 all_email_from_home_page=None):
         self.firstname = firstname
         self.midlename = midlename
         self.lastname = lastname
@@ -17,9 +18,12 @@ class Anketa:
         self.mobile_tel = mobile_tel
         self.work_tel = work_tel
         self.email = email
+        self.email2 = email2
+        self.email3 = email3
         self.byear = byear
         self.address2 = address2
         self.all_phones_from_home_page = all_phones_from_home_page
+        self.all_email_from_home_page = all_email_from_home_page
         self.id = id
 
     def __repr__(self):
