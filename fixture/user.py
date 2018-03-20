@@ -169,9 +169,12 @@ class UserHelper:
                text = cell[1].text
                text2 = cell[2].text
                id = element.find_element_by_name("selected[]").get_attribute("value")
+               address = cell[3].text
                all_phones = cell[5].text
+               all_emails = cell[4].text
                self.user_list_cashe.append(Anketa(lastname=text, id=id, firstname=text2,
-                                                  all_phones_from_home_page=all_phones))
+                                                  all_phones_from_home_page=all_phones,
+                                                  all_email_from_home_page=all_emails, address=address))
         return list(self.user_list_cashe)
 
     def get_user_info_from_edit_page(self, index):
@@ -183,8 +186,12 @@ class UserHelper:
         home_tel = wd.find_element_by_name('home').get_attribute('value')
         mobile_tel = wd.find_element_by_name('mobile').get_attribute('value')
         work_tel = wd.find_element_by_name('work').get_attribute('value')
+        email = wd.find_element_by_name('email').get_attribute('value')
+        email2 = wd.find_element_by_name('email2').get_attribute('value')
+        email3 = wd.find_element_by_name('email3').get_attribute('value')
+        address = wd.find_element_by_name('address').get_attribute('value')
         return Anketa(firstname=firstname, lastname=lastname, id=id, home_tel=home_tel, mobile_tel=mobile_tel,
-                      work_tel=work_tel)
+                      work_tel=work_tel, email=email, email2=email2, email3=email3, address=address)
 
     def get_user_list_on_view_page(self, index):
         wd = self.app.wd
