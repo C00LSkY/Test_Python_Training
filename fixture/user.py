@@ -50,6 +50,11 @@ class UserHelper:
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys(contacts.email)
         wd.find_element_by_name("email2").click()
+        wd.find_element_by_name("email2").clear()
+        wd.find_element_by_name("email2").send_keys(contacts.email2)
+        wd.find_element_by_name("email3").click()
+        wd.find_element_by_name("email3").clear()
+        wd.find_element_by_name("email3").send_keys(contacts.email3)
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").click()
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[2]").is_selected():
