@@ -3,7 +3,7 @@ __author__ = "C00LSkY"
 
 from model.group import Group
 import pytest
-from data.add_group import testdata
+from data.groups import testdata
 
 
 @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
