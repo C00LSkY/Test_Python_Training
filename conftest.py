@@ -27,6 +27,13 @@ def app(request):
     return fixture
 
 
+@pytest.fixture(scope="session")
+def db(request):
+    dbfixture = DbFixture()
+    return dbfixture
+
+
+
 
 @pytest.fixture(scope="session", autouse=True )
 def stop(request):
@@ -39,6 +46,7 @@ def stop(request):
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
+
 
 
 def pytest_generate_tests(metafunc):
