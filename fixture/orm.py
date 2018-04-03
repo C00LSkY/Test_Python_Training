@@ -17,6 +17,7 @@ class ORMFixture:
         name = Optional(str, column='group_name')
         header = Optional(str, column='group_header')
         footer = Optional(str, column='group_footer')
+        users = Set(lambda: ORMFixture.ORMAnketa, table="address_in_groups", column="id", reverse="groups", lazy=True)
 
 
     class ORMAnketa(db.Entity):
@@ -25,6 +26,7 @@ class ORMFixture:
         firstname = Optional(str, column='firstname')
         lastname = Optional(str, column='lastname')
         deprecated = Optional(datetime, column='deprecated')
+        groups = Set(ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="users", lazy=True)
 
 
     def __init__(self, host, name, user, password):
