@@ -207,5 +207,21 @@ class UserHelper:
         work_tel = re.search("W: (.*)", text).group(1)
         return Anketa(home_tel=home_tel, mobile_tel=mobile_tel, work_tel=work_tel)
 
+    def delete_user_by_id(self, id):
+        wd = self.app.wd
+        self.open_home()
+        # select first user
+        self.select_user_by_id(id)
+        # submit deletion
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wd.switch_to_alert().accept()
+        self.user_list_cashe = None
+
+
+    def select_user_by_id(self, id):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[id].click()
+
+
 
 

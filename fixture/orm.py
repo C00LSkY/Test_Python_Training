@@ -26,7 +26,7 @@ class ORMFixture:
         firstname = Optional(str, column='firstname')
         lastname = Optional(str, column='lastname')
         deprecated = Optional(datetime, column='deprecated')
-        groups = Set(ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="users", lazy=True)
+        groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="users", lazy=True)
 
 
     def __init__(self, host, name, user, password):
@@ -54,3 +54,14 @@ class ORMFixture:
         def convert(user):
             return Anketa(id=str(user.id), firstname=user.firname, lastname=user.lastname)
         return list(map(convert, users))
+
+    @db_session
+    def get_users_in_group(self, group):
+        orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
+        return self.convert_users_to_model(orm_group.users)
+
+    @db_session
+    def get_users_not_in_group(self, group):
+        orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
+        return self.convert_users_to_model(
+            select(c for c in ORMFixture.ORMAnketa if c.deprecated is None and orm_group not in c.groups)))

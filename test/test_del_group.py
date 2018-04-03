@@ -1,7 +1,7 @@
 __author__ = "C00LSkY"
 from model.group import Group
 import random
-import time
+
 
 def test_delete_some_group(app, db, check_ui):
     if len(db.get_group_list()) == 0:
