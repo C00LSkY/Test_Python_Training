@@ -189,6 +189,25 @@ class UserHelper:
         wd = self.app.wd
         wd.find_element_by_id(id).click()
 
+    def add_user_to_group(self, id):
+        wd = self.app.wd
+        wd.find_element_by_id(id).click()
+        wd.find_element_by_xpath("//div[@class='right']/select//option[4]").click()
+        wd.find_element_by_name("add").click()
 
+    def add_user_to_group(self, user_id, group_name):
+        wd = self.app.wd
+        self.open_home()
+        self.set_checkbox_user_by_id(user_id)
+        self.select_group_by_name(group_name)
+        wd.find_element_by_name("add").click()
+
+    def set_checkbox_user_by_id(self, user_id):
+        wd = self.app.wd
+        wd.find_element_by_id("%s" % user_id).click()
+
+    def select_group_by_name(self, group_name):
+        wd = self.app.wd
+        Select(wd.find_element_by_xpath(".//select[@name='to_group']")).select_by_visible_text(group_name)
 
 
