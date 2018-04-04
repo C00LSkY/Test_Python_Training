@@ -1,3 +1,6 @@
+
+
+
 import pymysql.cursors
 from model.group import Group
 from model.contacts import Anketa
@@ -28,7 +31,7 @@ class DbFixture:
 
 
     def get_user_list(self):
-        list= []
+        list = []
         cursor = self.connection.cursor()
         try:
             cursor.execute("select id, firstname, lastname, address, home, mobile, work, email, email2, email3   "
