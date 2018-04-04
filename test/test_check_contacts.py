@@ -1,25 +1,24 @@
 
 from model.contacts import Anketa
-from random import randrange
 import re
 
 
 
-def test_check_contact_home_page_with_edit_page(app):
-    if app.user.count_user() == 0:
+def test_check_contact_home_page_with_edit_page(app, db):
+    if len(db.get_user_list()) == 0:
         app.user.add_new_user(Anketa(firstname="Вася", midlename="Петрович", lastname='Пупкин', nickname='Пупка',
                                      company='Ромашка+Олень', address='Москва', home_tel='79999999990',
                                      mobile_tel='78888888880', work_tel='555', email='pypka@mail.ru',
                                      email2='pyp2@l.ru', email3='pyp2@r.ru', byear='', address2='тест моск'))
-    contact_from_home_page = app.user.get_user_list()
-    index = randrange(len(contact_from_home_page))
-    contact_from_home_page = app.user.get_user_list()[index]
-    contact_from_edit_page = app.user.get_user_info_from_edit_page(index)
-    assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
-    assert contact_from_home_page.all_email_from_home_page == merge_email_like_on_home_page(contact_from_edit_page)
-    assert contact_from_home_page.firstname == contact_from_edit_page.firstname
-    assert contact_from_home_page.lastname == contact_from_edit_page.lastname
-    assert contact_from_home_page.address == contact_from_edit_page.address
+    contact_ui = sorted(app.user.get_user_list(), key=Anketa.id_or_max)
+    contact_db = sorted(db.get_user_list(), key=Anketa.id_or_max)
+    assert len(contact_ui) == len(contact_db)
+    for i in range (len(contact_db)):
+        assert contact_ui[i].all_phones_from_home_page == merge_phones_like_on_home_page(contact_db[i])
+        assert contact_ui[i].all_email_from_home_page == merge_email_like_on_home_page(contact_db[i])
+        assert contact_ui[i].firstname == contact_db[i].firstname
+        assert contact_ui[i].lastname == contact_db[i].lastname
+        assert contact_ui[i].address == contact_db[i].address
 
 
 def clear(s):
