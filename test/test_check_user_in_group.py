@@ -1,4 +1,6 @@
 
+__author__ = "C00LSkY"
+
 from fixture.user import Anketa
 from fixture.group import Group
 from fixture.orm import ORMFixture
